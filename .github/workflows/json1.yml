@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Print matrix
         env:
-          JSON_DATA: ${{ needs.load-json.outputs.matrix-json }}
+          JSON_DATA: ${{ needs.load-json.outputs.json-file }}
         run: |
           echo "json_data: $JSON_DATA"
           echo "json_data: ${JSON_DATA}"
