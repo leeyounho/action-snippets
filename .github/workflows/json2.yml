@@ -1,5 +1,5 @@
 ---
-name: TEST
+name: Read Json and Use in Strategy Matrix
 on: workflow_dispatch
 jobs:
   load-config:
@@ -21,6 +21,7 @@ jobs:
     steps:
       - name: Print matrix
         env:
-          TESTOUTPUT: ${{ needs.load-config.outputs.matrix-json }}
+          MATRIX-JSON: ${{ needs.load-config.outputs.matrix-json }}
         run: |
-          echo "matrix-json: $TESTOUTPUT"
+          echo "matrix-json: $MATRIX-JSON"
+          echo "matrix-json: ${MATRIX-JSON}"
