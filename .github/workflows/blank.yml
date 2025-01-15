@@ -19,7 +19,7 @@ jobs:
     needs: load-config
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.load-config.outputs.matrix-json) }}
+      matrix: ${{ fromJson(needs.outputs.matrix-json) }}
     steps:
       - name: Print matrix values
         run: |
