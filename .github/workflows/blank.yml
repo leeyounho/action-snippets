@@ -13,6 +13,7 @@ jobs:
         id: load-matrix
         run: |
           matrix_data=$(cat .github/workflows/config.json | jq -c .)
+          echo "Loaded matrix data: $matrix_data" # 디버깅용 로그
           echo "matrix-json=$matrix_data" >> $GITHUB_OUTPUT
 
   echo-config:
