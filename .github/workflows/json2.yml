@@ -1,5 +1,5 @@
 ---
-name: Read Json and Load in other job
+name: Read Json and Use in Strategy Matrix
 on: workflow_dispatch
 jobs:
   load-json:
@@ -16,8 +16,20 @@ jobs:
           echo "Loaded json data: $json_data" # 디버깅용 로그
           echo "json-file=$json_data" >> $GITHUB_OUTPUT
   use-json:
-    needs: [load-json]
+    needs: load-json
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJSON(needs.load-json.outputs.json-file) }}
     steps:
-      - name: Print json
-        run: echo '${{ toJSON(needs.load-json.outputs) }}'
+      - name: Check
+        env:
+          MATRIX: ${{ toJSON(matrix) }}
+          ENV1: ${{ fromJSON(toJSON(matrix)).env1-1 }}
+          ENV2: ${{ fromJSON(toJSON(matrix)).env1-2 }}
+          ENV3: ${{ fromJSON(toJSON(matrix)).env1-3 }}
+        run: |
+          echo "MATRIX: $(jq -r -c '.' <<< "$MATRIX")"
+          echo "ENV1: [$ENV1]"
+          echo "ENV2: [$ENV2]"
+          echo "ENV3: [$ENV3]"
