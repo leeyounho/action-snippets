@@ -20,10 +20,11 @@ jobs:
     needs: load-config
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.outputs.matrix-json) }}
+      matrix: ${{ fromJSON(needs.load-config.outputs.matrix-json) }}
     steps:
       - name: Print matrix values
         run: |
+          echo "matrix-json: ${{ matrix }}"
           echo "env1.1: ${{ matrix.env1-1 }}"
           echo "env1.2: ${{ matrix.env1-2 }}"
           echo "env1.3: ${{ matrix.env1-3 }}"
