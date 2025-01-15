@@ -19,13 +19,6 @@ jobs:
           repository: leeyounho/command-line
           path: gradle-repo
 
-      # Ant 기반 저장소 체크아웃
-#      - name: Checkout Ant Repository
-#        uses: actions/checkout@v4
-#        with:
-#          repository: 사용자명/ant-저장소명
-#          path: ant-repo
-
       # Java 11 설정
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -43,22 +36,11 @@ jobs:
           cd gradle-repo
           ./gradlew clean build
 
-      # Ant 설치
-#      - name: Set up Ant
-#        uses: cedx/setup-ant@v1
-
-      # Ant 저장소 빌드
-#      - name: Build Ant Repository
-#        run: |
-#          cd ant-repo
-#          ant -noinput -buildfile build.xml
-
       # 빌드 결과물을 tar 파일로 묶기
       - name: Package Build Artifacts
         run: |
           mkdir -p setup-folder
           cp gradle-repo/build/libs/*.jar setup-folder
-#          cp ant-repo/dist/*.jar build_artifacts/ant-repo/
           tar -cvf setup-file.tar -C setup-folder .
 
       # tar 파일을 현재 저장소에 추가하고 커밋 및 푸시
