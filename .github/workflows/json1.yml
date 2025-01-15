@@ -5,7 +5,7 @@ jobs:
   load-json:
     runs-on: ubuntu-latest
     outputs:
-      json-file: ${{ steps.load-matrix.outputs.matrix-json }}
+      json-file: ${{ steps.load-matrix.outputs.json-file }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
