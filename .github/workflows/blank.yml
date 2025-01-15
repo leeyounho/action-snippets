@@ -23,4 +23,4 @@ jobs:
         env:
           MATRIX-JSON: ${{ needs.load-config.matrix-json }}
         run: |
-          echo "matrix-json: $MATRIX-JSON"
+          echo "matrix-json: ${MATRIX-JSON}"
