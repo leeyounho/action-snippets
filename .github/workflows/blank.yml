@@ -14,13 +14,13 @@ jobs:
         run: |
           matrix_data=$(cat .github/workflows/config.json | jq -c .)
           echo "Loaded matrix data: $matrix_data" # 디버깅용 로그
-          echo "matrix-json=MY_TEST_VALUE" >> $GITHUB_OUTPUT
+          echo "matrix-json=$matrix_data" >> $GITHUB_OUTPUT
   use-config:
     needs: load-config
     runs-on: ubuntu-latest
     steps:
       - name: Print matrix
         env:
-          TESTOUTPUT: ${{ needs.load-config.matrix-json }}
+          TESTOUTPUT: ${{ needs.load-config.outputs.matrix-json }}
         run: |
           echo "matrix-json: $TESTOUTPUT"
