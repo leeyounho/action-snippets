@@ -13,7 +13,7 @@ jobs:
         id: load-json
         run: |
           json_data=$(cat .github/workflows/config.json | jq -c .)
-          echo "Loaded json data: $json_data" # 디버깅용 로그
+          echo "Loaded json data: $json_data"
           echo "json-file=$json_data" >> $GITHUB_OUTPUT
   use-json:
     needs: load-json
