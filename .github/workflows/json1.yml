@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Load matrix from JSON file
+      - name: Load data from JSON file
         id: load-json
         run: |
           json_data=$(cat .github/workflows/config.json | jq -c .)
@@ -19,7 +19,7 @@ jobs:
     needs: load-json
     runs-on: ubuntu-latest
     steps:
-      - name: Print matrix
+      - name: Print json
         env:
           JSON_DATA: ${{ needs.load-json.outputs.json-file }}
         run: |

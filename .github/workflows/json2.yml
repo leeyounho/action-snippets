@@ -1,27 +1,23 @@
 ---
-name: Read Json and Use in Strategy Matrix
+name: Read Json and Load in other job
 on: workflow_dispatch
 jobs:
-  load-config:
+  load-json:
     runs-on: ubuntu-latest
     outputs:
-      matrix-json: ${{ steps.load-matrix.outputs.matrix-json }}
+      json-file: ${{ steps.load-json.outputs.json-file }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Load matrix from JSON file
-        id: load-matrix
+      - name: Load data from JSON file
+        id: load-json
         run: |
-          matrix_data=$(cat .github/workflows/config.json | jq -c .)
-          echo "Loaded matrix data: $matrix_data" # 디버깅용 로그
-          echo "matrix-json=$matrix_data" >> $GITHUB_OUTPUT
-  use-config:
-    needs: load-config
+          json_data=$(cat .github/workflows/config.json | jq -c .)
+          echo "Loaded json data: $json_data" # 디버깅용 로그
+          echo "json-file=$json_data" >> $GITHUB_OUTPUT
+  use-json:
+    needs: [load-json]
     runs-on: ubuntu-latest
     steps:
-      - name: Print matrix
-        env:
-          MATRIX-JSON: ${{ needs.load-config.outputs.matrix-json }}
-        run: |
-          echo "matrix-json: $MATRIX-JSON"
-          echo "matrix-json: ${MATRIX-JSON}"
+      - name: Print json
+        run: echo '${{ toJSON(needs.load-json.outputs) }}'
