@@ -21,6 +21,6 @@ jobs:
     steps:
       - name: Print matrix
         env:
-          MATRIX-JSON: ${{ needs.load-config.matrix-json }}
+          TESTOUTPUT: ${{ needs.load-config.matrix-json }}
         run: |
-          echo "matrix-json: ${MATRIX-JSON}"
+          echo "matrix-json: $TESTOUTPUT"
