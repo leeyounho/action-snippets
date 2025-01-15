@@ -4,6 +4,8 @@ on: workflow_dispatch
 jobs:
   load-config:
     runs-on: ubuntu-latest
+    outputs:
+      matrix-json: ${{ steps.load-matrix.outputs.matrix-json }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -11,13 +13,13 @@ jobs:
         id: load-matrix
         run: |
           matrix_data=$(cat .github/workflows/config.json | jq -c .)
-          echo "MATRIX_JSON=$matrix_data" >> $GITHUB_ENV
+          echo "matrix-json=$matrix_data" >> $GITHUB_OUTPUT
 
   echo-config:
     needs: load-config
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.env.MATRIX_JSON) }}
+      matrix: ${{ fromJson(needs.load-config.outputs.matrix-json) }}
     steps:
       - name: Print matrix values
         run: |
