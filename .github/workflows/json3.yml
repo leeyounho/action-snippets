@@ -32,6 +32,7 @@ jobs:
           cp -r config temp
           cp -r tbl temp
           cp -r mp temp
+          ls -l temp
           cd temp
           sed -i -e 's/temp1/${{ fromJSON(toJSON(matrix)).env1-1 }}/g' config/env-file
           sed -i -e 's/temp2/${{ fromJSON(toJSON(matrix)).env1-2 }}/g' config/env-file
