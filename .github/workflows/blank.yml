@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Load matrix from JSON file
         id: load-matrix
-        run: echo "matrix=$(cat config.json)" >> $GITHUB_ENV
+        run: echo "matrix=$(cat .github/workflows/config.json)" >> $GITHUB_ENV
 
   echo-config:
     needs: load-config
