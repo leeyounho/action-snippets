@@ -19,8 +19,8 @@ jobs:
     needs: load-config
     runs-on: ubuntu-latest
     steps:
-      - env:
-          MATRIX-JSON: ${{ needs.load-config.matrix-json }}
       - name: Print matrix
+        env:
+          MATRIX-JSON: ${{ needs.load-config.matrix-json }}
         run: |
           echo "matrix-json: $MATRIX-JSON"
