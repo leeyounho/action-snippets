@@ -37,7 +37,6 @@ jobs:
           sed -i -e 's/temp2/${{ fromJSON(toJSON(matrix)).env1-2 }}/g' config/env-file
           sed -i -e 's/temp3/${{ fromJSON(toJSON(matrix)).env1-3 }}/g' config/env-file
           tar -cvf ap-setup.tar *
-          mkdir -p 
           mv ap-setup.tar ../releases/${{ fromJSON(toJSON(matrix)).folder-name }}
       - name: Commit and Push Build Artifacts
         run: |
