@@ -1,0 +1,73 @@
+name: Build and Package Multiple Java Repositories
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 현재 저장소 체크아웃
+      - name: Checkout Current Repository
+        uses: actions/checkout@v4
+
+      # Gradle 기반 저장소 체크아웃
+      - name: Checkout Gradle Repository
+        uses: actions/checkout@v4
+        with:
+          repository: leeyounho/command-line
+          path: gradle-repo
+
+      # Ant 기반 저장소 체크아웃
+#      - name: Checkout Ant Repository
+#        uses: actions/checkout@v4
+#        with:
+#          repository: 사용자명/ant-저장소명
+#          path: ant-repo
+
+      # Java 11 설정
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      # Gradle 설정
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # Gradle 저장소 빌드
+      - name: Build Gradle Repository
+        run: |
+          cd gradle-repo
+          ./gradlew clean build
+
+      # Ant 설치
+#      - name: Set up Ant
+#        uses: cedx/setup-ant@v1
+
+      # Ant 저장소 빌드
+#      - name: Build Ant Repository
+#        run: |
+#          cd ant-repo
+#          ant -noinput -buildfile build.xml
+
+      # 빌드 결과물을 tar 파일로 묶기
+      - name: Package Build Artifacts
+        run: |
+          mkdir -p setup-folder
+          cp gradle-repo/build/libs/*.jar setup-folder
+#          cp ant-repo/dist/*.jar build_artifacts/ant-repo/
+          tar -cvf setup-file.tar -C setup-folder .
+
+      # tar 파일을 현재 저장소에 추가하고 커밋 및 푸시
+      - name: Commit and Push Build Artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add setup-file.tar
+          git commit -m "Release"
+          git push origin HEAD:main
