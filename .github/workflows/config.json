@@ -1,20 +1,24 @@
 [
   {
+    "folder-name": "folder1",
     "env1-1": "value1-1",
     "env1-2": "value1-2",
     "env1-3": "value1-3"
   },
   {
+    "folder-name": "folder2",
     "env1-1": "value2-1",
     "env1-2": "value2-2",
     "env1-3": "value2-3"
   },
   {
+    "folder-name": "folder3",
     "env1-1": "value3-1",
     "env1-2": "value3-2",
     "env1-3": "value3-3"
   },
   {
+    "folder-name": "folder4",
     "env1-1": "value4-1",
     "env1-2": "value4-2",
     "env1-3": "value4-3"
