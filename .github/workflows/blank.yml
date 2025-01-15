@@ -19,6 +19,6 @@ jobs:
     steps:
       - name: Print matrix values
         run: |
-          echo "env1.1: ${{ matrix.env1.1 }}"
-          echo "env1.2: ${{ matrix.env1.2 }}"
-          echo "env1.3: ${{ matrix.env1.3 }}"
+          echo "env1.1: ${{ matrix.env1-1 }}"
+          echo "env1.2: ${{ matrix.env1-2 }}"
+          echo "env1.3: ${{ matrix.env1-3 }}"
